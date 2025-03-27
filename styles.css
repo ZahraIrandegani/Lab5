@@ -137,6 +137,7 @@ button:disabled {
     font-weight: bold;
     color: #27ae60;
 }
+
 .map-container {
     flex-grow: 1;
     position: relative;
@@ -145,4 +146,24 @@ button:disabled {
 .map {
     height: 100%;
     width: 100%;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .app-container {
+        flex-direction: column;
+        height: auto;
+        max-width: 100%;
+    }
+
+    .controls-container {
+        width: 100%;
+        height: auto;
+        border-right: none;
+        border-bottom: 1px solid #ecf0f1;
+    }
+
+    .map-container {
+        height: 50vh;
+    }
 }
