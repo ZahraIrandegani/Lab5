@@ -112,6 +112,20 @@ document.getElementById('startBtn').addEventListener('click', () => {
     });
 });
 
+// End Connection
+document.getElementById('endBtn').addEventListener('click', () => {
+    if (client) {
+        client.disconnect();
+        document.getElementById('status').innerText = "Disconnected";
+        document.getElementById('startBtn').disabled = false;
+        document.getElementById('endBtn').disabled = true;
+        document.getElementById('shareBtn').disabled = true;
+        document.getElementById('publishBtn').disabled = true;
+        document.getElementById('host').disabled = false;
+        document.getElementById('port').disabled = false;
+        document.getElementById('topic').disabled = false;
+    }
+});
 
 // Share Status
 document.getElementById('shareBtn').addEventListener('click', () => {
@@ -123,4 +137,17 @@ document.getElementById('shareBtn').addEventListener('click', () => {
         document.getElementById('status').innerText = "Status shared";
         updateMap(geojson);
     });
+});
+
+// Publish Message
+document.getElementById('publishBtn').addEventListener('click', () => {
+    const publishTopic = document.getElementById('publish-topic').value;
+    const publishMessage = document.getElementById('publish-message').value;
+    
+    if (publishMessage) {
+        const message = new Paho.MQTT.Message(publishMessage);
+        message.destinationName = publishTopic;
+        client.send(message);
+        document.getElementById('status').innerText = "Message published to " + publishTopic;
+    }
 });
