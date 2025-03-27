@@ -31,3 +31,33 @@ document.getElementById('startBtn').addEventListener('click', () => {
         }
     });
 });
+
+// Generate GeoJSON
+function getGeoJSON(callback) {
+    navigator.geolocation.getCurrentPosition(
+        (position) => {
+            const geojson = {
+                type: "Feature",
+                geometry: {
+                    type: "Point",
+                    coordinates: [position.coords.longitude, position.coords.latitude]
+                },
+                properties: {
+                    temperature: Math.floor(Math.random() * 100) - 40 // Random -40 to 60
+                }
+            };
+            callback(geojson);
+        },
+        (error) => {
+            console.error("Geolocation error: " + error.message);
+        }
+    );
+}
+
+document.getElementById('shareBtn').addEventListener('click', () => {
+    getGeoJSON((geojson) => {
+        const message = new Paho.MQTT.Message(JSON.stringify(geojson));
+        message.destinationName = TOPIC;
+        client.send(message);
+    });
+});
