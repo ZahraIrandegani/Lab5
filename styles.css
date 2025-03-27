@@ -137,3 +137,12 @@ button:disabled {
     font-weight: bold;
     color: #27ae60;
 }
+.map-container {
+    flex-grow: 1;
+    position: relative;
+}
+
+.map {
+    height: 100%;
+    width: 100%;
+}
