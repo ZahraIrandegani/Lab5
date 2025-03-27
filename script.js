@@ -1,3 +1,6 @@
+
+let client = null;
+
 // Initialize Leaflet map
 function initMap(lat = 51.505, lng = -0.09) {
     map = L.map('map').setView([lat, lng], 13);
@@ -29,31 +32,6 @@ function updateMap(geojson) {
     map.setView([lat, lng], 13);
 }
 
-// MQTT Connection
-let client = null;
-
-document.getElementById('startBtn').addEventListener('click', () => {
-    const host = document.getElementById('host').value;
-    const port = parseInt(document.getElementById('port').value);
-
-    client = new Paho.MQTT.Client(host, port, "clientId_" + parseInt(Math.random() * 100));
-    
-    client.onConnectionLost = (responseObject) => {
-        if (responseObject.errorCode !== 0) {
-            console.log("Connection lost:" + responseObject.errorMessage);
-        }
-    };
-    
-    client.connect({
-        onSuccess: () => {
-            console.log("Connected to MQTT Broker");
-        },
-        onFailure: (message) => {
-            console.log("Connection failed: " + message.errorMessage);
-        }
-    });
-});
-
 // Generate GeoJSON
 function getGeoJSON(callback) {
     navigator.geolocation.getCurrentPosition(
@@ -71,15 +49,50 @@ function getGeoJSON(callback) {
             callback(geojson);
         },
         (error) => {
-            console.error("Geolocation error: " + error.message);
+            document.getElementById('status').innerText = "Geolocation error: " + error.message;
         }
     );
 }
 
+
+// MQTT Connection
+document.getElementById('startBtn').addEventListener('click', () => {
+    const host = document.getElementById('host').value;
+    const port = parseInt(document.getElementById('port').value);
+
+    client = new Paho.MQTT.Client(host, port, "clientId_" + parseInt(Math.random() * 100));
+    
+    client.onConnectionLost = () => {
+        document.getElementById('status').innerText = "Disconnected. Reconnecting...";
+        setTimeout(() => client.connect({ onSuccess: onConnect }), 2000);
+    };
+    
+    client.onMessageArrived = (message) => {
+        const geojson = JSON.parse(message.payloadString);
+        updateMap(geojson);
+        document.getElementById('status').innerText = "Message received and map updated";
+    };
+
+    client.connect({
+        onSuccess: onConnect,
+        onFailure: (err) => {
+            document.getElementById('status').innerText = "Connection failed: " + err.errorMessage;
+        },
+        useSSL: true,
+        userName: "",
+        password: "" 
+    });
+});
+
+
+// Share Status
 document.getElementById('shareBtn').addEventListener('click', () => {
+    const publishTopic = document.getElementById('publish-topic').value;
     getGeoJSON((geojson) => {
         const message = new Paho.MQTT.Message(JSON.stringify(geojson));
-        message.destinationName = TOPIC;
+        message.destinationName = publishTopic;
         client.send(message);
+        document.getElementById('status').innerText = "Status shared";
+        updateMap(geojson);
     });
 });
