@@ -1,5 +1,10 @@
+const YOUR_NAME = "Zahra_Irandegani";
+const COURSE_CODE = "ENGO651";
+const DEFAULT_TOPIC = `${COURSE_CODE}/${YOUR_NAME}/my_temperature`
 
 let client = null;
+let map = null;
+let marker = null;
 
 // Initialize Leaflet map
 function initMap(lat = 51.505, lng = -0.09) {
@@ -32,7 +37,7 @@ function updateMap(geojson) {
     map.setView([lat, lng], 13);
 }
 
-// Generate GeoJSON
+// Generate GeoJSON with current location and random temperature
 function getGeoJSON(callback) {
     navigator.geolocation.getCurrentPosition(
         (position) => {
@@ -52,6 +57,29 @@ function getGeoJSON(callback) {
             document.getElementById('status').innerText = "Geolocation error: " + error.message;
         }
     );
+}
+
+// Callback for successful connection
+function onConnect() {
+    const topic = document.getElementById('topic').value;
+    document.getElementById('status').innerText = "Connected to " + client.host;
+    client.subscribe(topic, (err) => {
+        if (err) {
+            document.getElementById('status').innerText = "Subscription failed: " + err;
+        } else {
+            document.getElementById('status').innerText += "\nSubscribed to " + topic;
+        }
+    });
+    
+    document.getElementById('startBtn').disabled = true;
+    document.getElementById('endBtn').disabled = false;
+    document.getElementById('shareBtn').disabled = false;
+    document.getElementById('publishBtn').disabled = false;
+    document.getElementById('host').disabled = true;
+    document.getElementById('port').disabled = true;
+    document.getElementById('topic').disabled = true;
+    
+    if (!map) initMap();
 }
 
 
@@ -80,7 +108,7 @@ document.getElementById('startBtn').addEventListener('click', () => {
         },
         useSSL: true,
         userName: "",
-        password: "" 
+        password: ""
     });
 });
 
