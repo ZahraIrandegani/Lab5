@@ -1,0 +1,139 @@
+* Reset default styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f7fa;
+    color: #333;
+    line-height: 1.6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.app-container {
+    display: flex;
+    width: 100%;
+    max-width: 1200px;
+    height: 800px;
+    border: 2px solid #2c3e50;
+    border-radius: 10px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.controls-container {
+    width: 350px;
+    background-color: #fff;
+    padding: 20px;
+    border-right: 1px solid #ecf0f1;
+    display: flex;
+    flex-direction: column;
+}
+
+h1 {
+    text-align: center;
+    color: #2c3e50;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+}
+
+.controls {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    font-weight: bold;
+    color: #34495e;
+}
+
+input[type="text"],
+input[type="number"] {
+    padding: 8px;
+    border: 1px solid #bdc3c7;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.button-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+button {
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.1s;
+}
+
+button:disabled {
+    background-color: #bdc3c7;
+    cursor: not-allowed;
+}
+
+#startBtn {
+    background-color: #2ecc71;
+    color: #fff;
+}
+
+#startBtn:hover:not(:disabled) {
+    background-color: #27ae60;
+    transform: translateY(-2px);
+}
+
+#endBtn {
+    background-color: #e74c3c;
+    color: #fff;
+}
+
+#endBtn:hover:not(:disabled) {
+    background-color: #c0392b;
+    transform: translateY(-2px);
+}
+
+#shareBtn {
+    background-color: #3498db;
+    color: #fff;
+}
+
+#shareBtn:hover:not(:disabled) {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+#publishBtn {
+    background-color: #9b59b6;
+    color: #fff;
+}
+
+#publishBtn:hover:not(:disabled) {
+    background-color: #8e44ad;
+    transform: translateY(-2px);
+}
+
+.status {
+    margin-top: 15px;
+    padding: 10px;
+    background: #d5f5e3;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: bold;
+    color: #27ae60;
+}
