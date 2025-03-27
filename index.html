@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Geoweb IoT Sensor Application</title>
+</head>
+<body>
+    <div class="app-container">
+        <div class="controls-container">
+            <h1>Geoweb IoT Sensor Application</h1>
+            <div class="controls">
+                <div class="input-group">
+                    <label for="host">Broker Host:</label>
+                    <input type="text" id="host" name="host" value="broker.emqx.io">
+                </div>
+                <div class="input-group">
+                    <label for="port">Port:</label>
+                    <input type="number" id="port" name="port" value="8084">
+                </div>
+                <div class="input-group">
+                    <label for="topic">Topic:</label>
+                    <input type="text" id="topic" name="topic" value="ENGO651/Zahra_Irandegani/my_temperature">
+                </div>
+                <div class="input-group">
+                    <label for="publish-topic">Publish Topic:</label>
+                    <input type="text" id="publish-topic" name="publish-topic" value="ENGO651/Zahra_Irandegani/my_temperature">
+                </div>
+                <div class="input-group">
+                    <label for="publish-message">Publish Message:</label>
+                    <input type="text" id="publish-message" name="publish-message" placeholder="Enter message">
+                </div>
+                <div class="button-group">
+                    <button id="startBtn">Start</button>
+                    <button id="endBtn" disabled>End</button>
+                    <button id="shareBtn" disabled>Share My Status</button>
+                    <button id="publishBtn" disabled>Publish</button>
+                </div>
+                <div id="status" class="status"></div>
+            </div>
+        </div>
+        </div>
+    </div>
+
+
+</body>
+</html>
