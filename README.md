@@ -3,6 +3,9 @@
 ## Overview
 This web application is a real-time IoT sensor tracking system using MQTT protocol, Leaflet maps, and geolocation services. It allows users to connect to an MQTT broker, publish messages, share location status, and visualize temperature data on an interactive map.
 
+## Live Demo
+**https://zahrairandegani.github.io/Lab5/**
+
 ## Features
 
 ### 1. MQTT Broker Connection
@@ -83,6 +86,11 @@ This web application is a real-time IoT sensor tracking system using MQTT protoc
 - Observe real-time map updates
 - Verify message receipt and location tracking
 
+## Accessing on Multiple Devices
+- Hosted on GitHub Pages for easy access
+- Responsive design supports mobile and desktop browsers
+- Simply visit the live demo link from any device
+
 ## Security
 - Supports SSL connections
 - No persistent authentication (for demonstration purposes)
@@ -95,4 +103,4 @@ This web application is a real-time IoT sensor tracking system using MQTT protoc
 
 ## Author
 Zahra Irandegani
-ENGO651 Course Project
+ENGO651 Lab 5 Assignment
