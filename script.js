@@ -6,6 +6,28 @@ function initMap(lat = 51.505, lng = -0.09) {
     }).addTo(map);
 }
 
+// Get marker color based on temperature
+function getMarkerColor(temp) {
+    if (temp < 10) return 'blue';
+    if (temp < 30) return 'green';
+    return 'red';
+}
+
+// Update map with new location and temperature
+function updateMap(geojson) {
+    const { coordinates } = geojson.geometry;
+    const temp = geojson.properties.temperature;
+    const [lng, lat] = coordinates;
+
+    if (marker) map.removeLayer(marker);
+    marker = L.circleMarker([lat, lng], {
+        radius: 8,
+        color: getMarkerColor(temp),
+        fillOpacity: 0.8
+    }).addTo(map);
+    marker.bindPopup(`Temperature: ${temp}°C`).openPopup();
+    map.setView([lat, lng], 13);
+}
 
 // MQTT Connection
 let client = null;
